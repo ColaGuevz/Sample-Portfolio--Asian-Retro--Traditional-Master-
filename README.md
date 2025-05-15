@@ -6,8 +6,6 @@ A sophisticated, minimalist portfolio template inspired by traditional Asian aes
 
 Check out the live demo: [View Demo](https://colaguevz.github.io/Sample-Portfolio--Asian-Retro--Traditional-Master-/)
 
-![Template Preview](https://via.placeholder.com/800x400.png?text=Template+Preview)
-
 ## 🌟 Features
 
 - **Elegant Design**: Clean, minimalist layout with traditional Asian aesthetic elements
