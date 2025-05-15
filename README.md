@@ -103,4 +103,4 @@ If you have any questions or need help customizing the template, please:
 
 ---
 
-Made with ❤️ by [Your Name] 
+Made with ❤️ by Rc Guevarra and AI friends. 
