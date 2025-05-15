@@ -1,0 +1,358 @@
+/* --- INK_&_STEEL : STYLESHEET --- */
+:root {
+    --bg-color-main: #F5F5DC; /* Aged Paper / Cream */
+    --bg-color-section-alt: #ECE5D8; /* Slightly darker paper */
+    --text-color-main: #3A3A3A; /* Dark Charcoal/Ink */
+    --text-color-subtle: #6B5B5B; /* Muted Brown/Grey */
+    --primary-accent: #B85042; /* Muted Hanko Red */
+    --secondary-accent: #5F7A6B; /* Deep Forest Green or Muted Teal */
+    --highlight-gold: #A88C54; /* Antique Gold for details */
+
+    --font-heading: 'Cormorant Garamond', serif; /* Elegant serif */
+    --font-body: 'Noto Sans JP', sans-serif; /* Clean, works well if needing JP later */
+    /* --font-body: 'EB Garamond', serif; /* If wanting all serif */
+    --font-accent-jp: 'Zen Kurenaido', sans-serif; /* For the Japanese subtitles, brush-like */
+
+    --header-height: 75px;
+    --border-color: rgba(58, 58, 58, 0.15); /* Subtle ink-like border */
+    --transition-main: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1); /* Smooth ease */
+}
+
+/* --- GLOBAL_SETUP --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color-main);
+    color: var(--text-color-main);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* --- BACKGROUND_TEXTURES_&_OVERLAYS --- */
+.background-texture {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/rice-paper-3.png'); /* Replace with preferred texture */
+    opacity: 0.6; /* Adjust to be subtle */
+    pointer-events: none;
+    z-index: -2;
+}
+.vignette-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.08); /* Subtle vignette */
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* --- TYPOGRAPHY_&_LAYOUT_HELPERS --- */
+.container { width: 90%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 80px 0; position: relative; }
+.section:nth-child(even) { background-color: var(--bg-color-section-alt); }
+
+.section-title-wrapper {
+    margin-bottom: 50px;
+    position: relative;
+    padding-left: 20px; /* Space for potential vertical line */
+}
+.section-title-wrapper::before { /* Subtle vertical stroke */
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px; bottom: 5px;
+    width: 3px;
+    background-color: var(--primary-accent);
+    opacity: 0.6;
+}
+.section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    color: var(--text-color-main);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.section-subtitle-jp {
+    font-family: var(--font-accent-jp);
+    font-size: 1.1rem;
+    color: var(--secondary-accent);
+    letter-spacing: 1px;
+}
+.hanko-stamp {
+    display: inline-block;
+    font-family: var(--font-accent-jp); /* Or specific script font */
+    color: var(--primary-accent);
+    border: 2px solid var(--primary-accent);
+    padding: 5px 8px;
+    font-size: 1.2rem;
+    line-height: 1;
+    text-transform: uppercase; /* For initials if not using Kanji */
+}
+.hanko-stamp-inline { /* For use in text */
+    font-family: var(--font-accent-jp);
+    color: var(--primary-accent);
+    border: 1px solid var(--primary-accent);
+    padding: 1px 4px;
+    font-size: 0.8em;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+/* --- HEADER --- */
+#main-header {
+    position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
+    display: flex; align-items: center;
+    background-color: rgba(245, 245, 220, 0.85); /* Translucent aged paper */
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 100;
+    transition: background-color var(--transition-main), box-shadow var(--transition-main);
+}
+#main-header.scrolled {
+    background-color: rgba(245, 245, 220, 0.98);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.header-container { display: flex; justify-content: space-between; align-items: center; }
+.logo-mark {
+    font-family: var(--font-accent-jp); /* Or a symbol font */
+    font-size: 1.5rem; color: var(--primary-accent);
+    border: 2px solid var(--primary-accent); padding: 5px 10px;
+    text-decoration: none; line-height: 1; font-weight: bold;
+    transition: background-color var(--transition-main), color var(--transition-main);
+}
+.logo-mark:hover { background-color: var(--primary-accent); color: var(--bg-color-main); }
+
+#primary-navigation ul { list-style: none; display: flex; }
+#primary-navigation ul li { margin-left: 30px; }
+.nav-link {
+    text-decoration: none; color: var(--text-color-subtle);
+    font-family: var(--font-body); font-weight: 500; /* Noto Sans JP weight */
+    font-size: 1rem; padding-bottom: 5px; position: relative;
+    transition: color var(--transition-main);
+}
+.nav-link::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 0; height: 1px; background: var(--primary-accent);
+    transition: width var(--transition-main);
+}
+.nav-link:hover, .nav-link.active { color: var(--text-color-main); }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+.mobile-nav-toggle { /* Basic for structure, enhance as needed */
+    display: none; background: none; border: none; cursor: pointer;
+    /* Style lines with CSS like previous examples if fully implementing */
+}
+.mobile-nav-toggle span { width: 25px; height: 2px; background: var(--text-color-main); margin: 4px 0; display: block; }
+
+/* --- HERO_SECTION --- */
+.hero-section {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; position: relative;
+    padding-top: var(--header-height);
+    background: radial-gradient(circle, rgba(245,245,220,0.3) 0%, rgba(236,229,216,0) 70%);
+}
+.hero-background-elements { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; }
+/* Example: .bg-element-mountain { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 120%; max-width: 1600px; opacity: 0.1; } */
+
+.hero-content { display: flex; align-items: center; justify-content: center; gap: 40px; }
+.hero-text-vertical-simulated {
+    writing-mode: vertical-rl; /* Simulate vertical text */
+    text-orientation: mixed;
+    font-family: var(--font-accent-jp);
+    color: var(--secondary-accent);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    border-left: 1px solid var(--secondary-accent);
+    padding-left: 15px;
+    height: 200px; /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.hero-main-text h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    color: var(--text-color-main);
+    font-weight: 600; /* Cormorant Garamond has various weights */
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+.hero-main-text .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    color: var(--text-color-subtle);
+    font-family: var(--font-body);
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+.cta-button {
+    display: inline-block;
+    background: transparent; color: var(--primary-accent);
+    border: 2px solid var(--primary-accent);
+    padding: 12px 30px; text-decoration: none;
+    font-family: var(--font-heading); font-weight: 600; font-size: 1rem;
+    border-radius: 4px; /* More classic than pill */
+    transition: background-color var(--transition-main), color var(--transition-main);
+}
+.cta-button:hover { background-color: var(--primary-accent); color: var(--bg-color-main); }
+
+/* Scroll Down Styling */
+.scroll-down-guide {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    font-size: 0.8rem; color: var(--text-color-subtle); text-align: center;
+}
+.mousey {
+    width: 3px; padding: 6px 10px; height: 25px; border: 2px solid var(--text-color-subtle);
+    border-radius: 20px; opacity: 0.75; display: block; margin: 0 auto 5px;
+}
+.scroller { width: 3px; height: 6px; border-radius: 2px; background-color: var(--text-color-subtle);
+    animation: scroll-ani 2s infinite; display: block; position: relative;
+}
+@keyframes scroll-ani {
+    0% { opacity: 0; top: 0px; }
+    50% { opacity: 1; top: 8px; }
+    100% { opacity: 0; top: 12px; }
+}
+
+/* --- ABOUT_SECTION --- */
+.about-layout { display: flex; gap: 50px; align-items: flex-start; }
+.about-image-container {
+    flex-basis: 35%; max-width: 350px; position: relative;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    background: rgba(255,255,255,0.2); /* Slight internal highlight */
+}
+.about-image { display: block; width: 100%; height: auto; filter: sepia(20%) contrast(90%); }
+.about-image-container .small-stamp {
+    position: absolute; bottom: 15px; right: 15px;
+    font-size: 1rem; padding: 3px 5px;
+}
+.about-text-content { flex-basis: 65%; }
+.about-text-content p { margin-bottom: 20px; font-size: 1.05rem; color: var(--text-color-main); }
+
+/* --- WORKS_SECTION --- */
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+}
+.work-item {
+    background-color: var(--bg-color-main); /* Or transparent to blend */
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: box-shadow var(--transition-main), transform var(--transition-main);
+}
+.work-item:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transform: translateY(-5px);
+}
+.work-link { text-decoration: none; color: inherit; display: block; }
+.work-image-wrapper {
+    overflow: hidden;
+    aspect-ratio: 5/3.8; /* Or a fixed height */
+    border-bottom: 1px solid var(--border-color);
+}
+.work-image-wrapper img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s var(--transition-main);
+}
+.work-item:hover .work-image-wrapper img { transform: scale(1.05); }
+.work-info { padding: 20px; }
+.work-info h3 {
+    font-family: var(--font-heading); font-size: 1.4rem; color: var(--text-color-main);
+    margin-bottom: 8px; font-weight: 600;
+}
+.work-info p { font-size: 0.95rem; color: var(--text-color-subtle); margin-bottom: 12px; }
+.work-category {
+    font-size: 0.8rem; color: var(--secondary-accent);
+    font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* --- WISDOM_SECTION --- */
+.wisdom-section { background-color: var(--bg-color-section-alt); }
+.wisdom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+.wisdom-card {
+    background-color: var(--bg-color-main);
+    border: 1px solid var(--border-color);
+    padding: 30px; text-align: center; border-radius: 3px;
+}
+.wisdom-icon { margin-bottom: 15px; }
+.wisdom-icon img { /* If using img, style it. SVG better */
+    max-width: 50px; height: auto; opacity: 0.7;
+    filter: grayscale(30%);
+}
+.wisdom-card h4 {
+    font-family: var(--font-heading); font-size: 1.3rem;
+    color: var(--text-color-main); margin-bottom: 10px; font-weight: 600;
+}
+.wisdom-card p { font-size: 0.95rem; color: var(--text-color-subtle); }
+
+/* --- CONNECT_SECTION --- */
+.connect-container { max-width: 750px; text-align: center; }
+.connect-invitation { font-size: 1.1rem; margin-bottom: 40px; color: var(--text-color-subtle); }
+.connect-links-wrapper { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+.connect-link-item {
+    display: inline-block;
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--text-color-subtle);
+    border-radius: 3px;
+    min-width: 280px; /* Ensure consistent width */
+    transition: border-color var(--transition-main), color var(--transition-main);
+}
+.connect-link-item:hover { border-color: var(--primary-accent); color: var(--primary-accent); }
+.connect-link-item span { /* For Kanji icon */
+    font-family: var(--font-accent-jp); color: var(--primary-accent);
+    margin-right: 10px; font-size: 1.1rem;
+}
+
+/* --- FOOTER --- */
+#main-footer { padding: 30px 0; border-top: 1px solid var(--border-color); }
+.footer-content { display: flex; justify-content: space-between; align-items: center; }
+.footer-text { font-size: 0.9rem; color: var(--text-color-subtle); }
+.back-to-top a {
+    text-decoration: none; color: var(--text-color-subtle);
+    font-size: 0.9rem;
+    transition: color var(--transition-main);
+}
+.back-to-top a:hover { color: var(--primary-accent); }
+
+/* --- AOS_OVERRIDES (Optional - to ensure it fits the style) --- */
+[data-aos="fade-up"] { transform: translateY(30px); } /* Default might be 20px */
+[data-aos] { transition-duration: 0.6s !important; /* Control AOS speed */ }
+
+/* --- RESPONSIVE_ADJUSTMENTS --- */
+@media (max-width: 768px) {
+    html { font-size: 15px; }
+    .section { padding: 60px 0; }
+    .header-container { padding: 0 15px; }
+    #primary-navigation { /* Basic hide/show, better with JS toggle class */
+        /* Example mobile nav display would be handled in JS by toggling a class */
+        display: none; 
+        position: absolute; top: var(--header-height); left: 0; right: 0;
+        background-color: var(--bg-color-main);
+        flex-direction: column; padding: 10px 0;
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    }
+    #primary-navigation.nav-open { display: flex; } /* JS would toggle this */
+    #primary-navigation ul { flex-direction: column; width: 100%; }
+    #primary-navigation ul li { margin: 0; width: 100%; }
+    .nav-link { display: block; padding: 12px 20px; text-align: center; }
+    .nav-link::after { display: none; } /* No underline on mobile stacked nav */
+    .mobile-nav-toggle { display: block; /* Show hamburger */ }
+    .hero-content { flex-direction: column-reverse; gap: 20px; }
+    .hero-text-vertical-simulated { display: none; /* Might be too much for mobile */ }
+    .about-layout { flex-direction: column; align-items: center; text-align: center; }
+    .about-image-container { margin-bottom: 30px; }
+    .footer-content { flex-direction: column; gap: 15px; text-align: center; }
+}
+@media (max-width: 480px) {
+    .section-title { font-size: 1.8rem; }
+    .section-subtitle-jp { font-size: 0.9rem; }
+    .hero-main-text h1 { font-size: 2.2rem; }
+    .hero-main-text .subtitle { font-size: 1rem; }
+}
